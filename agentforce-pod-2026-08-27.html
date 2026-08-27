@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Agentforce Support Readiness Pod — Proposal · Aug 27 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:#f6f8fa; --surface:#ffffff; --border:#d0d7de;
+  --text:#1f2328; --muted:#656d76; --accent:#0969da;
+  --green:#1a7f37; --red:#cf222e; --yellow:#9a6700; --orange:#bc4c00;
+  --emea:#8250df; --india:#e16f42;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;line-height:1.5}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px}
+
+/* Header */
+.header{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 24px;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.header h1{font-size:20px;font-weight:700;color:var(--text);margin-bottom:4px}
+.header .meta{color:var(--muted);font-size:12px}
+.badges{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.badge-red{background:#ffebe9;color:var(--red);border:1px solid #ffcecb}
+.badge-green{background:#dafbe1;color:var(--green);border:1px solid #aceebb}
+.badge-blue{background:#ddf4ff;color:var(--accent);border:1px solid #80ccff}
+.badge-purple{background:#fbefff;color:var(--emea);border:1px solid #d2b4ff}
+.badge-yellow{background:#fff8c5;color:var(--yellow);border:1px solid #f5d845}
+.badge-orange{background:#fff1e5;color:var(--orange);border:1px solid #ffc896}
+
+/* KPI row */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.kpi.alert{background:#ffebe9;border-color:#ffcecb}
+.kpi.warn{background:#fff8c5;border-color:#f5d845}
+.kpi.good{background:#dafbe1;border-color:#aceebb}
+.kpi-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.kpi-val{font-size:26px;font-weight:700;line-height:1}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* Grids */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px}
+.card.red-border{border-color:#ffcecb;border-width:2px}
+.card.yellow-border{border-color:#f5d845;border-width:2px}
+.card.orange-border{border-color:#ffc896;border-width:2px}
+.card.purple-border{border-color:#d2b4ff;border-width:2px}
+.card.green-border{border-color:#aceebb;border-width:2px}
+.card.blue-border{border-color:#80ccff;border-width:2px}
+.card-title{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+
+/* Tables */
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{background:#f6f8fa;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--border);text-align:left}
+.data-table td{padding:8px 10px;border-bottom:1px solid #eaeef2;vertical-align:top}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:#f6f8fa}
+.data-table td.num{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.data-table th.num{text-align:right}
+
+/* Insight panels */
+.insight{padding:10px 14px;border-radius:6px;margin-bottom:8px;border-left:3px solid}
+.insight:last-child{margin-bottom:0}
+.insight.red{background:#ffebe9;border-color:var(--red);color:#24292f}
+.insight.green{background:#dafbe1;border-color:var(--green);color:#24292f}
+.insight.yellow{background:#fff8c5;border-color:#d4a72c;color:#24292f}
+.insight.blue{background:#ddf4ff;border-color:var(--accent);color:#24292f}
+.insight.purple{background:#fbefff;border-color:var(--emea);color:#24292f}
+.insight.orange{background:#fff1e5;border-color:var(--orange);color:#24292f}
+.insight strong{font-weight:700}
+
+/* Pills */
+.pill{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;border:1px solid}
+.pill-red{background:#ffebe9;color:var(--red);border-color:#ffcecb}
+.pill-green{background:#dafbe1;color:var(--green);border-color:#aceebb}
+.pill-blue{background:#ddf4ff;color:var(--accent);border-color:#80ccff}
+.pill-purple{background:#fbefff;color:var(--emea);border-color:#d2b4ff}
+.pill-yellow{background:#fff8c5;color:var(--yellow);border-color:#f5d845}
+.pill-orange{background:#fff1e5;color:var(--orange);border-color:#ffc896}
+
+/* Good-news strip */
+.good-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:12px}
+.good-cell{background:#dafbe1;padding:8px 10px;text-align:center}
+.good-cell .gc-val{font-size:16px;font-weight:700;color:var(--green)}
+.good-cell .gc-lbl{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* Image */
+.img-center{text-align:center;margin:12px 0}
+.img-center img{max-width:100%;border-radius:6px;border:1px solid var(--border)}
+.img-caption{font-size:11px;color:var(--muted);margin-top:6px}
+
+/* Step tiles */
+.step-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.step-tile{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px}
+.step-num{font-size:28px;font-weight:800;line-height:1;margin-bottom:8px}
+.step-num.s1{color:var(--accent)}
+.step-num.s2{color:var(--emea)}
+.step-num.s3{color:var(--green)}
+.step-title{font-size:13px;font-weight:700;margin-bottom:8px}
+.step-body{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* Ask list */
+.ask-list{list-style:none;padding:0}
+.ask-list li{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #eaeef2;align-items:flex-start}
+.ask-list li:last-child{border-bottom:none}
+.ask-num{background:var(--accent);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.ask-text{font-size:13px;line-height:1.5}
+
+/* CTA banner */
+.cta-banner{background:linear-gradient(135deg,#0969da 0%,#8250df 100%);border-radius:8px;padding:20px 24px;color:#fff;margin-bottom:16px;text-align:center}
+.cta-banner .cta-headline{font-size:17px;font-weight:700;margin-bottom:6px}
+.cta-banner .cta-sub{font-size:13px;opacity:.88}
+
+/* Agenda match */
+.agenda-match{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px}
+
+/* Footer */
+footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 8px;border-top:1px solid var(--border);margin-top:8px}
+
+/* Chart container */
+.chart-wrap{position:relative;height:180px}
+
+@media(max-width:768px){
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .grid-2,.grid-3,.step-row,.good-strip{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h1>⚡ Agentforce Support Readiness Pod — Project Proposal</h1>
+      <div class="meta">Raised: Aug 27, 2026 · CSG Leadership Call · Scope: All Clouds · All GEOs</div>
+    </div>
+    <div class="badges">
+      <span class="badge badge-red">🚨 Customers live on AgF today</span>
+      <span class="badge badge-purple">No routing. No pod. No P&T loop.</span>
+      <span class="badge badge-green">✅ Fix is actionable now</span>
+    </div>
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <div class="cta-headline">"Our customers are already using Agentforce. They will log cases. Right now those cases land randomly with whoever picks up the queue."</div>
+    <div class="cta-sub">This proposal says: get ahead of that curve, build the readiness now, and turn every support case into a product signal — before we're reacting to a flood.</div>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi alert">
+      <div class="kpi-label">Orgs Using AgF (YTD)</div>
+      <div class="kpi-val">20</div>
+      <div class="kpi-sub">↑ 4 since Aug 21 snapshot</div>
+    </div>
+    <div class="kpi alert">
+      <div class="kpi-label">Active Orgs This Month</div>
+      <div class="kpi-val">9</div>
+      <div class="kpi-sub">Growing month-on-month</div>
+    </div>
+    <div class="kpi warn">
+      <div class="kpi-label">Action Calls This Month</div>
+      <div class="kpi-val">121</div>
+      <div class="kpi-sub">Core production workflows</div>
+    </div>
+    <div class="kpi warn">
+      <div class="kpi-label">Adoption vs Target</div>
+      <div class="kpi-val">8.4%</div>
+      <div class="kpi-sub">vs 10% target — gap closing</div>
+    </div>
+    <div class="kpi alert">
+      <div class="kpi-label">Support Cases Already Logged</div>
+      <div class="kpi-val">14</div>
+      <div class="kpi-sub">RC alone · Jun 25–Jul 26</div>
+    </div>
+  </div>
+
+  <!-- Live Dashboard Evidence -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">📊 Live Evidence — Revenue Cloud Agentforce Actions Dashboard (Aug 21, 2026)</div>
+    <div class="img-center">
+      <img src="agentforce-usage-aug21.png" alt="Agentforce Usage Dashboard Aug 21 2026"/>
+      <div class="img-caption">Source: Agentforce Actions Dashboard · Revenue Cloud · As of Aug 21, 2026</div>
+    </div>
+  </div>
+
+  <!-- Top Accounts + Top Actions -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🏢 Top Accounts — Already Dependent on AgF Actions</div>
+      <table class="data-table">
+        <thead><tr><th>Account</th><th>Status</th><th class="num">Calls To Date</th><th class="num">This Month</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vestas Wind Systems A/S</strong></td><td><span class="pill pill-yellow">New</span></td><td class="num">46</td><td class="num">46</td></tr>
+          <tr><td><strong>Cellular South, Inc.</strong></td><td><span class="pill pill-yellow">New</span></td><td class="num">41</td><td class="num">41</td></tr>
+          <tr><td><strong>Selegic Inc.</strong></td><td><span class="pill pill-green">Growth</span></td><td class="num">24</td><td class="num">8</td></tr>
+          <tr><td><strong>Workday, Inc.</strong></td><td><span class="pill pill-yellow">New</span></td><td class="num">18</td><td class="num">18</td></tr>
+        </tbody>
+      </table>
+      <div class="insight blue" style="margin-top:12px"><strong>These accounts are in production.</strong> When they hit a blocker, they will log a case. There is currently no trained engineer or routing rule ready to receive it.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚙️ Top Actions Being Used — Revenue Cloud</div>
+      <table class="data-table">
+        <thead><tr><th>Action</th><th class="num">To Date</th><th class="num">This Month</th></tr></thead>
+        <tbody>
+          <tr><td>Find Products</td><td class="num">11</td><td class="num">5</td></tr>
+          <tr><td>Query Quote Line Records</td><td class="num">10</td><td class="num">4</td></tr>
+          <tr><td>Get Prodt Sell Model For Prdct</td><td class="num">9</td><td class="num">4</td></tr>
+          <tr><td>Get Product Details</td><td class="num">9</td><td class="num">3</td></tr>
+          <tr><td>Apply Discount To Quote Line</td><td class="num">8</td><td class="num">2</td></tr>
+          <tr><td>Add Quote Line Item to Quote</td><td class="num">6</td><td class="num">2</td></tr>
+          <tr><td>Create Initial Quote in RC</td><td class="num">6</td><td class="num">2</td></tr>
+        </tbody>
+      </table>
+      <div class="insight orange" style="margin-top:12px"><strong>These are core quoting workflows</strong> — not experiments. Failures in these actions directly impact customer revenue operations.</div>
+    </div>
+  </div>
+
+  <!-- Adoption Trend Chart -->
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-title">📈 Monthly Active Orgs — Trend</div>
+      <div class="chart-wrap">
+        <canvas id="orgTrend"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📞 Monthly Action Calls — Trend</div>
+      <div class="chart-wrap">
+        <canvas id="callTrend"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Proposal -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title" style="font-size:15px">🎯 The Proposal — 3 Components</div>
+    <div class="step-row" style="margin-bottom:0">
+      <div class="step-tile">
+        <div class="step-num s1">01</div>
+        <div class="step-title">Create a Dedicated P&T Topic for Agentforce</div>
+        <div class="step-body">
+          Establish Agentforce as a standalone <strong>Product &amp; Topic (P&amp;T) category</strong> across Industries and Revenue Cloud.<br><br>
+          Assign a <strong>named product sponsor per cloud</strong> to receive VOC reports and functionality gap summaries.<br><br>
+          Today there is no structured path from a support case to the product team for Agentforce issues — this creates one.
+        </div>
+      </div>
+      <div class="step-tile">
+        <div class="step-num s2">02</div>
+        <div class="step-title">Automated Case Routing to a Readiness Pod</div>
+        <div class="step-body">
+          Build an <strong>automated trigger</strong>: any case with Agentforce-related signals (product topic, subject keywords, action names) routes immediately to the pod.<br><br>
+          Automation <strong>alerts pod members</strong> at point of case creation — no manual triage.<br><br>
+          Pod covers <strong>all GEOs</strong> — start with 3–5 trained engineers globally. SPOC enforced by design.
+        </div>
+      </div>
+      <div class="step-tile">
+        <div class="step-num s3">03</div>
+        <div class="step-title">Structured VOC Feedback Loop — Case → VOC → P&T</div>
+        <div class="step-body">
+          Every Agentforce case tagged against a VOC category at close.<br><br>
+          Pod lead produces a <strong>monthly summary</strong>: top blockers, case count, affected accounts — direct to product sponsor.<br><br>
+          Sync cadence <strong>starts monthly; increases to weekly as volume grows.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agenda Match -->
+  <div class="agenda-match">
+    <div class="card-title" style="font-size:14px;margin-bottom:12px">📋 Why Raise This Today — Links to All 4 Agenda Items</div>
+    <table class="data-table">
+      <thead><tr><th>Agenda Item</th><th>How This Proposal Answers It</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Demand trends + future modeling</strong></td>
+          <td>Agentforce case volume will grow with adoption — the pod scales ahead of the curve, not behind it</td>
+        </tr>
+        <tr>
+          <td><strong>SPOC compliance</strong></td>
+          <td>Pod model enforces SPOC by design — trained engineers, owned cases, clear accountability</td>
+        </tr>
+        <tr>
+          <td><strong>AgF complexity handled by humans</strong></td>
+          <td>Agentforce-adjacent cases are exactly the high-complexity, novel work humans will own as AI deflects the routine</td>
+        </tr>
+        <tr>
+          <td><strong>Synchronous statistics — future state</strong></td>
+          <td>Pod creates a new leading indicator: Agentforce case volume by action type, tracked weekly across all GEOs</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VOC Evidence -->
+  <div class="card red-border" style="margin-bottom:16px">
+    <div class="card-title">🔬 VOC Evidence Already Exists — Revenue Cloud (Jun 2025 – Jul 2026)</div>
+    <div class="grid-2" style="margin-bottom:0">
+      <div>
+        <table class="data-table">
+          <thead><tr><th>VOC Item</th><th class="num">Cases Aligned</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>[AgF] Update attributes &amp; add bundle optional components</strong></td>
+              <td class="num" style="color:var(--red)">10 / 14</td>
+              <td><span class="pill pill-red">Confirmed blocker</span></td>
+            </tr>
+            <tr>
+              <td><strong>[AgF] Create ramp deals using Quoting Agent</strong></td>
+              <td class="num">0 / 14</td>
+              <td><span class="pill pill-green">No evidence yet</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="insight red" style="margin-top:12px">10 of 14 cases map to a single product gap. Without a P&T loop, this evidence never reaches the product team.</div>
+      </div>
+      <div>
+        <div class="insight blue"><strong>Methodology used:</strong> Multi-vector SOQL search on OrgCS · AI-assisted triage against VOC criteria · Manual SME validation</div>
+        <div class="insight green" style="margin-top:8px"><strong>This framework is ready to scale.</strong> Revenue Cloud proves the model works. The pod operationalises it across all clouds.</div>
+        <div class="insight purple" style="margin-top:8px"><strong>39,000 Revenue Cloud cases queried</strong> to surface 14 Agentforce-relevant cases. As adoption grows, this number will rise significantly.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ask for -->
+  <div class="card blue-border" style="margin-bottom:16px">
+    <div class="card-title" style="font-size:14px">✋ What to Ask For on the Call</div>
+    <ul class="ask-list">
+      <li>
+        <div class="ask-num">1</div>
+        <div class="ask-text">Endorsement to <strong>pilot the Agentforce Support Readiness Pod</strong> — 90 day trial across all GEOs</div>
+      </li>
+      <li>
+        <div class="ask-num">2</div>
+        <div class="ask-text">A <strong>named product sponsor</strong> from each cloud (Revenue Cloud, Industries) to receive the monthly VOC feed</div>
+      </li>
+      <li>
+        <div class="ask-num">3</div>
+        <div class="ask-text"><strong>Automated routing rule</strong> for Agentforce case identification and pod alert at case creation</div>
+      </li>
+      <li>
+        <div class="ask-num">4</div>
+        <div class="ask-text">Creation of <strong>Agentforce as a formal P&T topic</strong> in the case taxonomy — across all clouds</div>
+      </li>
+    </ul>
+  </div>
+
+  <footer>Agentforce Support Readiness Pod · Project Proposal · Aug 27, 2026 · CSG Leadership Call · Revenue Cloud as pilot example · Scope: All Clouds · All GEOs</footer>
+
+</div>
+
+<script>
+const def = (id, cfg) => new Chart(document.getElementById(id).getContext('2d'), cfg);
+const months = ['Mar 26','Apr 26','May 26','Jun 26','Jul 26','Aug 26'];
+const tickColor = '#656d76';
+const gridColor = 'rgba(208,215,222,.5)';
+const baseOpts = (yLabel) => ({
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:{display:false}},
+  scales:{
+    x:{ticks:{color:tickColor,font:{size:10}},grid:{color:gridColor}},
+    y:{ticks:{color:tickColor,font:{size:10}},grid:{color:gridColor},title:{display:!!yLabel,text:yLabel,color:tickColor,font:{size:10}}}
+  }
+});
+
+def('orgTrend',{
+  type:'bar',
+  data:{
+    labels:months,
+    datasets:[{
+      label:'Active Orgs',
+      data:[3,4,5,6,8,9],
+      backgroundColor: months.map((_,i)=> i===5 ? 'rgba(248,81,73,.75)' : 'rgba(88,166,255,.55)'),
+      borderRadius:4
+    }]
+  },
+  options:{...baseOpts('Monthly Active Orgs'), plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>`${c.raw} orgs`}}}}
+});
+
+def('callTrend',{
+  type:'bar',
+  data:{
+    labels:months,
+    datasets:[{
+      label:'Action Calls',
+      data:[12,45,420,80,35,121],
+      backgroundColor: months.map((_,i)=> i===5 ? 'rgba(248,81,73,.75)' : 'rgba(163,113,247,.55)'),
+      borderRadius:4
+    }]
+  },
+  options:{...baseOpts('Monthly Action Calls'), plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>`${c.raw} calls`}}}}
+});
+</script>
+</body>
+</html>
