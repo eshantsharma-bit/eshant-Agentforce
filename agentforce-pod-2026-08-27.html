@@ -152,6 +152,80 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 8px;bo
     <div class="cta-sub">This proposal says: get ahead of that curve, build the readiness now, and turn every support case into a product signal — before we're reacting to a flood.</div>
   </div>
 
+  <!-- PROOF SECTION: It's Already Happening -->
+  <div class="card red-border" style="margin-bottom:16px">
+    <div class="card-title" style="font-size:15px">🔎 This Is Not a Future Risk — It Is Happening Right Now</div>
+
+    <div class="insight red" style="margin-bottom:12px">
+      <strong>We queried ~39,000 Revenue Cloud support cases (Jun 2025 – Jul 2026).</strong>
+      We found <strong>14 cases where customers were already exploring or blocked on Agentforce functionality</strong> in Revenue Cloud — with no P&amp;T topic, no trained owner, and no feedback path to the product team.
+    </div>
+
+    <!-- Timeline flow -->
+    <div style="display:flex;gap:0;align-items:stretch;margin-bottom:16px;border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:12px">
+      <div style="flex:1;padding:14px;background:#ffebe9;border-right:1px solid #ffcecb">
+        <div style="font-weight:700;color:var(--red);margin-bottom:6px">STEP 1 — Customer hits a gap</div>
+        <div style="color:#24292f">Customer is using Agentforce actions in Revenue Cloud — Quoting Agent, PCM actions, product lookups. Something breaks or doesn't work as expected.</div>
+      </div>
+      <div style="flex:1;padding:14px;background:#fff8c5;border-right:1px solid #f5d845">
+        <div style="font-weight:700;color:var(--yellow);margin-bottom:6px">STEP 2 — They log a support case</div>
+        <div style="color:#24292f">The case enters the standard Revenue Cloud queue. No Agentforce-specific routing. No keyword flag. No alert.</div>
+      </div>
+      <div style="flex:1;padding:14px;background:#fff1e5;border-right:1px solid #ffc896">
+        <div style="font-weight:700;color:var(--orange);margin-bottom:6px">STEP 3 — Lands with a random engineer</div>
+        <div style="color:#24292f">Engineer has no Agentforce readiness training. No documented P&amp;T category exists for Agentforce. Case is handled as generic Revenue Cloud.</div>
+      </div>
+      <div style="flex:1;padding:14px;background:#ffebe9">
+        <div style="font-weight:700;color:var(--red);margin-bottom:6px">STEP 4 — Gap never reaches Product</div>
+        <div style="color:#24292f">No VOC tag. No P&amp;T report. The product team never learns that customers are blocked. The same gap surfaces again in the next case.</div>
+      </div>
+    </div>
+
+    <!-- The 14 cases evidence -->
+    <div class="grid-2" style="margin-bottom:0">
+      <div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">What We Found — 14 Cases, Revenue Cloud</div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Agentforce Gap Identified</th>
+              <th class="num">Cases</th>
+              <th>Gap Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>[AgF] Update attributes &amp; add bundle optional components via Quoting Agent</strong></td>
+              <td class="num" style="color:var(--red);font-size:16px;font-weight:800">10</td>
+              <td><span class="pill pill-red">Confirmed blocker · No P&amp;T</span></td>
+            </tr>
+            <tr>
+              <td><strong>[AgF] Create ramp deals using Quoting Agent</strong></td>
+              <td class="num">0</td>
+              <td><span class="pill pill-green">No cases yet</span></td>
+            </tr>
+            <tr>
+              <td><strong>Other Agentforce-adjacent Revenue Cloud cases</strong></td>
+              <td class="num">4</td>
+              <td><span class="pill pill-yellow">Unclassified · No P&amp;T</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:10px;padding:8px 12px;background:#f6f8fa;border-radius:6px;border:1px solid var(--border);font-size:11px;color:var(--muted)">
+          Source: <a href="https://salesforce-internal.slack.com/archives/C0BLPP9ACMP/p1785757982960819" style="color:var(--accent)">Slack thread — Eshant Sharma → Kaushik Basu, Kalpesh Agrawal, Swapnil Kharche · Aug 3, 2026</a><br>
+          Methodology: Multi-vector SOQL on OrgCS · AI triage · Manual SME validation · ~39,000 cases queried
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">What Was Missing in Every Single One of These Cases</div>
+        <div class="insight red"><strong>No P&amp;T topic for Agentforce.</strong> Cases were filed under generic Revenue Cloud topics. No way to track volume or trend over time.</div>
+        <div class="insight orange" style="margin-top:8px"><strong>No trained engineer assigned.</strong> Cases landed with whoever was available in the queue — not someone with Agentforce knowledge.</div>
+        <div class="insight yellow" style="margin-top:8px"><strong>No routing or alert.</strong> No automated flag that this was an Agentforce case. Managers had no visibility it was even happening.</div>
+        <div class="insight red" style="margin-top:8px"><strong>No path to product team.</strong> 10 customers blocked on the same gap. Product never received a single VOC data point from these cases.</div>
+      </div>
+    </div>
+  </div>
+
   <!-- KPI Row -->
   <div class="kpi-row">
     <div class="kpi alert">
