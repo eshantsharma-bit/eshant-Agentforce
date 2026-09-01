@@ -157,8 +157,8 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 8px;bo
     <div class="card-title" style="font-size:15px">🔎 This Is Not a Future Risk — It Is Happening Right Now</div>
 
     <div class="insight red" style="margin-bottom:12px">
-      <strong>We queried ~39,000 Revenue Cloud support cases (Jun 2025 – Jul 2026).</strong>
-      We found <strong>14 cases where customers were already exploring or blocked on Agentforce functionality</strong> in Revenue Cloud — with no P&amp;T topic, no trained owner, and no feedback path to the product team.
+      <strong>We queried ~39,000 Revenue Cloud support cases (Jun 2025 – Aug 2026).</strong>
+      We found <strong>15 cases where customers were already exploring or blocked on Agentforce functionality</strong> in Revenue Cloud — 14 original (Jun 2025–Jul 2026) + <span style="background:#dafbe1;color:#1a7f37;padding:1px 6px;border-radius:4px;font-weight:700">1 new case confirmed in Aug 2026</span> — with no P&amp;T topic, no trained owner, and no feedback path to the product team.
     </div>
 
     <!-- Timeline flow -->
@@ -181,10 +181,10 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 8px;bo
       </div>
     </div>
 
-    <!-- The 14 cases evidence -->
-    <div class="grid-2" style="margin-bottom:0">
+    <!-- The 15 cases evidence -->
+    <div class="grid-2" style="margin-bottom:16px">
       <div>
-        <div style="font-weight:700;font-size:12px;margin-bottom:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">What We Found — 14 Cases, Revenue Cloud</div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">What We Found — 15 Cases, Revenue Cloud</div>
         <table class="data-table">
           <thead>
             <tr>
@@ -209,6 +209,11 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 8px;bo
               <td class="num">4</td>
               <td><span class="pill pill-yellow">Unclassified · No P&amp;T</span></td>
             </tr>
+            <tr style="background:#dafbe1">
+              <td><strong>[AgF · NEW AUG] MCP server creating RC quotes &amp; attributes — StartDate/EndDate not written</strong><br><span style="font-size:11px;color:var(--muted)">Case 474391025 · Glean · Agentforce RC Quoting via MCP</span></td>
+              <td class="num" style="color:var(--green);font-size:16px;font-weight:800">1</td>
+              <td><span class="pill pill-green">New · Aug 17 2026</span></td>
+            </tr>
           </tbody>
         </table>
         <div style="margin-top:10px;padding:8px 12px;background:#f6f8fa;border-radius:6px;border:1px solid var(--border);font-size:11px;color:var(--muted)">
@@ -222,6 +227,149 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 8px;bo
         <div class="insight orange" style="margin-top:8px"><strong>No trained engineer assigned.</strong> Cases landed with whoever was available in the queue — not someone with Agentforce knowledge.</div>
         <div class="insight yellow" style="margin-top:8px"><strong>No routing or alert.</strong> No automated flag that this was an Agentforce case. Managers had no visibility it was even happening.</div>
         <div class="insight red" style="margin-top:8px"><strong>No path to product team.</strong> 10 customers blocked on the same gap. Product never received a single VOC data point from these cases.</div>
+        <div class="insight green" style="margin-top:8px"><strong>Aug 2026: Volume is already growing.</strong> Case 474391025 (Glean) filed Aug 17 — MCP-based Agentforce quoting in production hitting attribute-write failures. Exactly the pattern the pod is designed to catch.</div>
+      </div>
+    </div>
+
+    <!-- All 15 cases breakdown -->
+    <div>
+      <div style="font-weight:700;font-size:12px;margin-bottom:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">All 15 Cases — Individual Breakdown by Created Month</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Case #</th>
+            <th>Subject</th>
+            <th>Account</th>
+            <th>P&amp;T Topic</th>
+            <th>Created Month</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>473497496</td>
+            <td>Create Initial Quote action — NullPointerException with custom Price Book</td>
+            <td>RevCycle Limited</td>
+            <td>Transaction Mgmt</td>
+            <td><span class="pill pill-purple">May 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>473834899</td>
+            <td>OOTB Quoting Agent Session Not Initiating in RCA/ARM Org</td>
+            <td>AppShark Software</td>
+            <td>Product Configurator</td>
+            <td><span class="pill pill-blue">Jun 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>473834934</td>
+            <td>Salesforce Contracts on Agentforce Revenue Management — Private External Review</td>
+            <td>Blue Stream Fiber</td>
+            <td>Contract Lifecycle Mgmt</td>
+            <td><span class="pill pill-blue">Jun 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>473951804</td>
+            <td>ARM: product visibility in Product Configurator based on running user's permission</td>
+            <td>Lightspeed Commerce</td>
+            <td>Product Configurator</td>
+            <td><span class="pill pill-blue">Jun 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>473991008</td>
+            <td>Scratch org for Agentforce Revenue Management</td>
+            <td>Mint Consulting</td>
+            <td>Product Configurator</td>
+            <td><span class="pill pill-yellow">Jul 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>474000373</td>
+            <td>Agentforce Revenue Management Fundamentals</td>
+            <td>Herber Aircraft Service</td>
+            <td>Product Configurator</td>
+            <td><span class="pill pill-yellow">Jul 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>474004797</td>
+            <td>Unable to Update Bundle Product Attributes from Agentforce – Product Validation Blocking</td>
+            <td>AppShark Software</td>
+            <td>Product Configurator</td>
+            <td><span class="pill pill-yellow">Jul 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>474036148</td>
+            <td>Revenue: Agentforce Revenue Management</td>
+            <td>Zayo Group</td>
+            <td>Salesforce CPQ</td>
+            <td><span class="pill pill-yellow">Jul 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>474112748</td>
+            <td>Backdated value acceptance for Next billing date in ARM Billing</td>
+            <td>PwC</td>
+            <td>Billing &amp; Invoicing</td>
+            <td><span class="pill pill-yellow">Jul 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>474114979</td>
+            <td>Revenue: Agentforce Revenue Management</td>
+            <td>DE-CIX Management GmbH</td>
+            <td>Product Configurator</td>
+            <td><span class="pill pill-yellow">Jul 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>474127106</td>
+            <td>Revenue: Agentforce Revenue Management Fundamentals</td>
+            <td>Optimizely</td>
+            <td>Product Configurator</td>
+            <td><span class="pill pill-yellow">Jul 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>474141001</td>
+            <td>ARM: Renewal Quote Prices are not working as expected</td>
+            <td>Rystad Energy AS</td>
+            <td>Price Management</td>
+            <td><span class="pill pill-yellow">Jul 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>474141901</td>
+            <td>Need some assistance in RCA cloud + Agentforce</td>
+            <td>Wipro Limited</td>
+            <td>Developer Support</td>
+            <td><span class="pill pill-yellow">Jul 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr>
+            <td>474151271</td>
+            <td>ARM – Attribute-Based Adjustment Price Rules</td>
+            <td>Cloudity</td>
+            <td>Price Management</td>
+            <td><span class="pill pill-yellow">Jul 2026</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+          <tr style="background:#dafbe1;font-weight:700">
+            <td>474391025 ★</td>
+            <td>Issue with MCP server creating Revenue Cloud quotes and attributes — StartDate/EndDate not written</td>
+            <td>Glean</td>
+            <td>Transaction Mgmt</td>
+            <td><span class="pill pill-green">Aug 2026 · NEW</span></td>
+            <td><span class="pill pill-green">Closed</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:8px;padding:8px 12px;background:#dafbe1;border-radius:6px;border:1px solid #aceebb;font-size:11px;color:#1a7f37;font-weight:600">
+        ★ Case 474391025 is the first confirmed case where a customer is using Agentforce RC actions via an MCP server in production — a new adoption vector not previously observed.
       </div>
     </div>
   </div>
@@ -250,8 +398,8 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 8px;bo
     </div>
     <div class="kpi alert">
       <div class="kpi-label">Support Cases Already Logged</div>
-      <div class="kpi-val">14</div>
-      <div class="kpi-sub">RC alone · Jun 25–Jul 26</div>
+      <div class="kpi-val">15</div>
+      <div class="kpi-sub">RC alone · Jun 25–Aug 26 · +1 new Aug</div>
     </div>
   </div>
 
@@ -376,7 +524,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 8px;bo
 
   <!-- VOC Evidence -->
   <div class="card red-border" style="margin-bottom:16px">
-    <div class="card-title">🔬 VOC Evidence Already Exists — Revenue Cloud (Jun 2025 – Jul 2026)</div>
+    <div class="card-title">🔬 VOC Evidence Already Exists — Revenue Cloud (Jun 2025 – Aug 2026)</div>
     <div class="grid-2" style="margin-bottom:0">
       <div>
         <table class="data-table">
@@ -384,22 +532,27 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 8px;bo
           <tbody>
             <tr>
               <td><strong>[AgF] Update attributes &amp; add bundle optional components</strong></td>
-              <td class="num" style="color:var(--red)">10 / 14</td>
+              <td class="num" style="color:var(--red)">10 / 15</td>
               <td><span class="pill pill-red">Confirmed blocker</span></td>
             </tr>
             <tr>
               <td><strong>[AgF] Create ramp deals using Quoting Agent</strong></td>
-              <td class="num">0 / 14</td>
+              <td class="num">0 / 15</td>
               <td><span class="pill pill-green">No evidence yet</span></td>
+            </tr>
+            <tr style="background:#dafbe1">
+              <td><strong>[AgF · NEW] MCP server integration — attribute write failures in RC Quoting</strong><br><span style="font-size:11px;color:var(--muted)">Case 474391025 · Glean · Aug 17 2026</span></td>
+              <td class="num" style="color:var(--green)">1 / 15</td>
+              <td><span class="pill pill-green">New Aug 2026</span></td>
             </tr>
           </tbody>
         </table>
-        <div class="insight red" style="margin-top:12px">10 of 14 cases map to a single product gap. Without a P&T loop, this evidence never reaches the product team.</div>
+        <div class="insight red" style="margin-top:12px">10 of 15 cases map to a single product gap. Without a P&T loop, this evidence never reaches the product team.</div>
       </div>
       <div>
         <div class="insight blue"><strong>Methodology used:</strong> Multi-vector SOQL search on OrgCS · AI-assisted triage against VOC criteria · Manual SME validation</div>
         <div class="insight green" style="margin-top:8px"><strong>This framework is ready to scale.</strong> Revenue Cloud proves the model works. The pod operationalises it across all clouds.</div>
-        <div class="insight purple" style="margin-top:8px"><strong>39,000 Revenue Cloud cases queried</strong> to surface 14 Agentforce-relevant cases. As adoption grows, this number will rise significantly.</div>
+        <div class="insight purple" style="margin-top:8px"><strong>39,000 Revenue Cloud cases queried</strong> to surface 15 Agentforce-relevant cases (14 original + 1 new Aug 2026). As adoption grows, this number will rise significantly.</div>
       </div>
     </div>
   </div>
